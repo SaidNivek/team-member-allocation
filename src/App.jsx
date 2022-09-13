@@ -3,6 +3,8 @@ import Header from './Header';
 import Footer from './Footer';
 import Employees from './Employees';
 import GroupedTeamMembers from './GroupedTeamMembers';
+import Nav from './Nav';
+import NotFound from './NotFound';
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
@@ -130,6 +132,7 @@ function App() {
   return (
     <div>
       <Router>
+        <Nav />
         <Header 
           selectedTeam={selectedTeam}
           // This will filter the employees array and look for the people in the selected team and get the length of that array
@@ -153,7 +156,12 @@ function App() {
               element={
                 <GroupedTeamMembers />
               }>
-
+            </Route>
+            <Route 
+              path="*"
+              element={
+                <NotFound />
+              }>
             </Route>
           </Routes>
         <Footer />
