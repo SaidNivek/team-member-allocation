@@ -2,7 +2,9 @@ import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import Employees from './Employees';
+import GroupedTeamMembers from './GroupedTeamMembers';
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
   // This will select the item that is in local storage, if it exists, or pull in the hard-coded value that we have passed in previously
@@ -127,19 +129,35 @@ function App() {
 
   return (
     <div>
-      <Header 
-        selectedTeam={selectedTeam}
-        // This will filter the employees array and look for the people in the selected team and get the length of that array
-        // That number will be passed to the Header.jsx file to be usable for displaying the number of people on the selected team
-        teamMemberCount={employees.filter((employee) => employee.teamName === selectedTeam).length}
-      />
-      <Employees  
-        employees={employees}
-        selectedTeam={selectedTeam}
-        handleEmployeeCardClick={handleEmployeeCardClick}
-        handleTeamSelectionChange={handleTeamSelectionChange}
-      /> 
-      <Footer />
+      <Router>
+        <Header 
+          selectedTeam={selectedTeam}
+          // This will filter the employees array and look for the people in the selected team and get the length of that array
+          // That number will be passed to the Header.jsx file to be usable for displaying the number of people on the selected team
+          teamMemberCount={employees.filter((employee) => employee.teamName === selectedTeam).length}
+          />
+          <Routes>
+            <Route 
+              path="/" 
+              element={ 
+                <Employees  
+                  employees={employees}
+                  selectedTeam={selectedTeam}
+                  handleEmployeeCardClick={handleEmployeeCardClick}
+                  handleTeamSelectionChange={handleTeamSelectionChange}
+                />
+              }>              
+            </Route>
+            <Route 
+              path="/GroupedTeamMembers"
+              element={
+                <GroupedTeamMembers />
+              }>
+
+            </Route>
+          </Routes>
+        <Footer />
+      </Router>
     </div>
   );
 }
